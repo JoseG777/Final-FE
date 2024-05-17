@@ -23,17 +23,22 @@ class EditStudentView extends Component {
       email: initialData.email || "",
       imageUrl: initialData.imageUrl || "",
       gpa: initialData.gpa || "",
+      campusId: initialData.campusId || "",
     };
   }
 
   handleChange = (event) => {
     const { name, value } = event.target;
-    this.setState({ [name]: value });
+    if (name === "campusId" && value === "") {
+      this.setState({ [name]: null });
+    } else {
+      this.setState({ [name]: value });
+    }
   };
 
   handleSubmit = (event) => {
     event.preventDefault();
-    const { firstname, lastname, email, imageUrl, gpa } = this.state;
+    const { firstname, lastname, email, imageUrl, gpa, campusId } = this.state;
     const updatedStudent = {
       id: this.props.initialData.id,
       firstname,
@@ -41,12 +46,13 @@ class EditStudentView extends Component {
       email,
       imageUrl,
       gpa,
+      campusId: campusId || null, // set campusId to null if it's not provided
     };
     this.props.onSave(updatedStudent);
   };
 
   render() {
-    const { firstname, lastname, email, imageUrl, gpa } = this.state;
+    const { firstname, lastname, email, imageUrl, gpa, campusId } = this.state;
     const { classes } = this.props;
     return (
       <div>
@@ -93,6 +99,15 @@ class EditStudentView extends Component {
             type="text"
             name="gpa"
             value={gpa}
+            onChange={this.handleChange}
+            className={classes.inputField}
+          />
+          <br />
+          <label>Campus ID: </label>
+          <input
+            type="text"
+            name="campusId"
+            value={campusId}
             onChange={this.handleChange}
             className={classes.inputField}
           />

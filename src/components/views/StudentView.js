@@ -12,7 +12,7 @@ const StudentView = ({ student, onEditStudent }) => {
 
   useEffect(() => {
     const prevCampus = prevCampusRef.current;
-    if (prevCampus && prevCampus.id !== student.campus.id) {
+    if (prevCampus && student.campus && prevCampus.id !== student.campus.id) {
       console.log("Student campus has been updated");
     }
     prevCampusRef.current = student.campus;
@@ -28,12 +28,12 @@ const StudentView = ({ student, onEditStudent }) => {
       />
       <p>GPA: {student.gpa}</p>
 
-      {student.campus ? (
+      {student && student.campus ? (
         <Link to={`/campus/${student.campus.id}`}>
           <h3>{student.campus.name}</h3>
         </Link>
       ) : (
-        <h3>Student not enrolled anywhere</h3>
+        <h3>Student is not enrolled in any college campus</h3>
       )}
 
       <button onClick={() => onEditStudent()}> Edit Student </button>
