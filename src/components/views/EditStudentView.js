@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Button, TextField, Typography, Paper } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
 
 const styles = {
@@ -11,6 +12,10 @@ const styles = {
   },
   inputField: {
     margin: "10px 0",
+  },
+  title: {
+    textAlign: "center",
+    marginBottom: "20px",
   },
 };
 class EditStudentView extends Component {
@@ -55,66 +60,79 @@ class EditStudentView extends Component {
     const { firstname, lastname, email, imageUrl, gpa, campusId } = this.state;
     const { classes } = this.props;
     return (
-      <div>
-        <h1>Edit Student</h1>
-        <form onSubmit={this.handleSubmit} className={classes.formContainer}>
-          <label>First Name: </label>
-          <input
-            type="text"
+      <Paper className={classes.formContainer}>
+        <Typography variant="h4" className={classes.title}>
+          Edit Student
+        </Typography>
+        <form onSubmit={this.handleSubmit}>
+          <TextField
+            fullWidth
+            variant="outlined"
+            className={classes.inputField}
+            label="First Name"
             name="firstname"
             value={firstname}
             onChange={this.handleChange}
-            className={classes.inputField}
+            required
           />
-          <br />
-          <label>Last Name: </label>
-          <input
-            type="text"
+
+          <TextField
+            fullWidth
+            variant="outlined"
+            className={classes.inputField}
+            label="Last Name"
             name="lastname"
             value={lastname}
             onChange={this.handleChange}
-            className={classes.inputField}
+            required
           />
-          <br />
-          <label>Email: </label>
-          <input
-            type="text"
+
+          <TextField
+            fullWidth
+            variant="outlined"
+            className={classes.inputField}
+            label="Email"
             name="email"
             value={email}
             onChange={this.handleChange}
-            className={classes.inputField}
+            required
           />
-          <br />
-          <label>Image URL: </label>
-          <input
-            type="text"
+
+          <TextField
+            fullWidth
+            variant="outlined"
+            className={classes.inputField}
+            label="Image URL"
             name="imageUrl"
             value={imageUrl}
             onChange={this.handleChange}
-            className={classes.inputField}
           />
-          <br />
-          <label>GPA: </label>
-          <input
-            type="text"
+
+          <TextField
+            fullWidth
+            variant="outlined"
+            className={classes.inputField}
+            label="GPA"
             name="gpa"
             value={gpa}
             onChange={this.handleChange}
-            className={classes.inputField}
           />
-          <br />
-          <label>Campus ID: </label>
-          <input
-            type="text"
+
+          <TextField
+            fullWidth
+            variant="outlined"
+            className={classes.inputField}
+            label="Campus Id"
             name="campusId"
             value={campusId}
             onChange={this.handleChange}
-            className={classes.inputField}
           />
-          <br />
-          <button type="submit">Save Changes</button>
+
+          <Button type="submit" color="primary" variant="contained" fullWidth>
+            Save Changes
+          </Button>
         </form>
-      </div>
+      </Paper>
     );
   }
 }
