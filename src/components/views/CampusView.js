@@ -40,7 +40,7 @@ const CampusView = ({
         <p>No image available</p>
       )}
       <h2> Students: </h2>
-      {campus.students &&
+      {campus.students && campus.students.length > 0 ? (
         campus.students.map((student) => (
           <div key={student.id}>
             <hr />
@@ -54,7 +54,10 @@ const CampusView = ({
             </button>
             <hr />
           </div>
-        ))}
+        ))
+      ) : (
+        <p>There are no students currently enrolled.</p>
+      )}
       <button onClick={() => onAddStudent(campus.id)}>
         {" "}
         Create and Add Student{" "}

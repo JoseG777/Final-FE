@@ -1,79 +1,100 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
+import { Button, TextField } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
 
-class EditCampusView extends Component {
-  constructor(props) {
-    super(props);
-    const { initialData } = this.props;
-    this.state = {
-      name: initialData.name || "",
-      address: initialData.address || "",
-      description: initialData.description || "",
-      imageUrl: initialData.imageUrl || "",
-    };
-  }
+const useStyles = makeStyles((theme) => ({
+  formContainer: {
+    width: "500px",
+    margin: "auto",
+    padding: "20px",
+    backgroundColor: "#f0f0f5",
+    borderRadius: "5px",
+  },
+  inputField: {
+    margin: "10px 0",
+  },
+}));
 
-  handleChange = (event) => {
+const EditCampusView = (props) => {
+  const { initialData, onSave } = props;
+  const [state, setState] = useState({
+    name: initialData.name || "",
+    address: initialData.address || "",
+    description: initialData.description || "",
+    imageUrl: initialData.imageUrl || "",
+  });
+
+  const handleChange = (event) => {
     const { name, value } = event.target;
-    this.setState({ [name]: value });
+    setState((prevState) => ({ ...prevState, [name]: value }));
   };
 
-  handleSubmit = (event) => {
+  const handleSubmit = (event) => {
     event.preventDefault();
-    const { name, address, description, imageUrl } = this.state;
+    const { name, address, description, imageUrl } = state;
     const updatedCampus = {
-      id: this.props.initialData.id,
+      id: initialData.id,
       name,
       address,
       description,
       imageUrl,
     };
-    this.props.onSave(updatedCampus);
+    onSave(updatedCampus);
   };
 
-  render() {
-    const { name, address, description, imageUrl } = this.state;
+  const classes = useStyles();
+  const { name, address, description, imageUrl } = state;
 
-    return (
-      <div>
-        <h1>Edit Campus</h1>
-        <form onSubmit={this.handleSubmit}>
-          <label>Name: </label>
-          <input
-            type="text"
+  return (
+    <div>
+      <h1>Edit Campus</h1>
+      <div className={classes.formContainer}>
+        <form onSubmit={handleSubmit} style={{ textAlign: "center" }}>
+          <TextField
+            fullWidth
+            variant="outlined"
+            className={classes.inputField}
+            label="Name"
             name="name"
             value={name}
-            onChange={this.handleChange}
+            onChange={handleChange}
+            required
           />
-          <br />
-          <label>Address: </label>
-          <input
-            type="text"
+          <TextField
+            fullWidth
+            variant="outlined"
+            className={classes.inputField}
+            label="Address"
             name="address"
             value={address}
-            onChange={this.handleChange}
+            onChange={handleChange}
+            required
           />
-          <br />
-          <label>Description: </label>
-          <input
-            type="text"
+          <TextField
+            fullWidth
+            variant="outlined"
+            className={classes.inputField}
+            label="Description"
             name="description"
             value={description}
-            onChange={this.handleChange}
+            onChange={handleChange}
           />
-          <br />
-          <label>Image URL: </label>
-          <input
-            type="text"
+          <TextField
+            fullWidth
+            variant="outlined"
+            className={classes.inputField}
+            label="Image URL"
             name="imageUrl"
             value={imageUrl}
-            onChange={this.handleChange}
+            onChange={handleChange}
           />
-          <br />
-          <button type="submit">Save Changes</button>
+          <Button type="submit" color="primary" variant="contained">
+            Save Changes
+          </Button>
         </form>
       </div>
-    );
-  }
-}
+    </div>
+  );
+};
 
 export default EditCampusView;

@@ -25,6 +25,7 @@ const StudentView = ({ student, onEditStudent }) => {
       <img
         src={student.imageUrl}
         alt={student.firstname + " " + student.lastname}
+        style={{ width: "300px" }}
       />
       <p>GPA: {student.gpa}</p>
 
