@@ -8,6 +8,8 @@ export const DELETE_CAMPUS = "DELETE_CAMPUS";
 //Single campus
 export const FETCH_CAMPUS = "FETCH_CAMPUS";
 export const EDIT_CAMPUS = "EDIT_CAMPUS";
+export const ADD_STUDENT_TO_CAMPUS = 'ADD_STUDENT_TO_CAMPUS';
+export const REMOVE_STUDENT_FROM_CAMPUS = 'REMOVE_STUDENT_FROM_CAMPUS';
 
 //All students
 export const FETCH_ALL_STUDENTS = "FETCH_ALL_STUDENTS";

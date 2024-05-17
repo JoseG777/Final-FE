@@ -4,10 +4,21 @@ CampusView.js
 The Views component is responsible for rendering web page with data provided by the corresponding Container component.
 It constructs a React component to display a single campus and its students (if any).
 ================================================== */
+import React, { useEffect, useRef } from 'react';
 import { Link } from "react-router-dom";
 
 // Take in props data to construct the component
 const CampusView = ({campus, onEditCampus, onAddStudent, onRemoveStudent }) => {
+
+  const prevStudentsRef = useRef();
+  
+  useEffect(() => {
+    const prevStudents = prevStudentsRef.current;
+    if (prevStudents && prevStudents.length !== campus.students.length) {
+      console.log('Student list has been updated');
+    }
+    prevStudentsRef.current = campus.students;
+  }, [campus.students]); 
   
   // Render a single Campus view with list of its students
   return (

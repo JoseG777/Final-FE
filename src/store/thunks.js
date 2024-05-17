@@ -70,10 +70,9 @@ export const updateCampusThunk = (campusData) => async (dispatch) => {
 
 // Add a single student to a campus and remove a single student from a campus
 export const addStudentToCampusThunk = (studentData, campusId) => async (dispatch) => {
-  console.log('Received campusId:', campusId); 
   try {
     const response = await axios.post(`/api/campuses/${campusId}/students`, studentData);
-    dispatch({ type: 'ADD_STUDENT_TO_CAMPUS', payload: response.data });
+    dispatch(ac.addStudentToCampus(response.data, campusId));
   } catch (error) {
     console.error('Failed to add student to campus:', error);
   }
@@ -82,7 +81,7 @@ export const addStudentToCampusThunk = (studentData, campusId) => async (dispatc
 export const removeStudentFromCampusThunk = (campusId, studentId) => async (dispatch) => {
   try {
     await axios.delete(`/api/campuses/${campusId}/students/${studentId}`);
-    dispatch({ type: 'REMOVE_STUDENT_FROM_CAMPUS', payload: { campusId, studentId } });
+    dispatch(ac.removeStudentFromCampus(campusId, studentId));
   } catch (error) {
     console.error('Failed to remove student from campus:', error);
   }
