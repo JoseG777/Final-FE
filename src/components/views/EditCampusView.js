@@ -1,14 +1,14 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 
 class EditCampusView extends Component {
   constructor(props) {
     super(props);
     const { initialData } = this.props;
     this.state = {
-      name: initialData.name || '',
-      address: initialData.address || '',
-      description: initialData.description || '',
-      imageUrl: initialData.imageUrl || '',
+      name: initialData.name || "",
+      address: initialData.address || "",
+      description: initialData.description || "",
+      imageUrl: initialData.imageUrl || "",
     };
   }
 

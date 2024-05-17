@@ -4,78 +4,90 @@ NewStudentView.js
 The Views component is responsible for rendering web page with data provided by the corresponding Container component.
 It constructs a React component to display the new student page.
 ================================================== */
-import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
+import { Button, TextField } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
 
-// Create styling for the input form
-const useStyles = makeStyles( () => ({
-  formContainer:{  
-    width: '500px',
-    backgroundColor: '#f0f0f5',
-    borderRadius: '5px',
-    margin: 'auto',
+const useStyles = makeStyles((theme) => ({
+  formContainer: {
+    width: "500px",
+    margin: "auto",
+    padding: "20px",
+    backgroundColor: "#f0f0f5",
+    borderRadius: "5px",
   },
-  title: {
-    flexGrow: 1,
-    textAlign: 'left',
-    textDecoration: 'none'
-  }, 
-  customizeAppBar:{
-    backgroundColor: '#11153e',
-    shadows: ['none'],
-  },
-  formTitle:{
-    backgroundColor:'#c5c8d6',
-    marginBottom: '15px',
-    textAlign: 'center',
-    borderRadius: '5px 5px 0px 0px',
-    padding: '3px'
+  inputField: {
+    margin: "10px 0",
   },
 }));
 
-const NewStudentView = (props) => {
-  const {handleChange, handleSubmit } = props;
+const NewStudentView = ({ handleChange, handleSubmit }) => {
   const classes = useStyles();
 
-  // Render a New Student view with an input form
   return (
     <div>
-      <h1>New Student</h1>
+      <h1>Add New Student</h1>
+      <div className={classes.formContainer}>
+        <form onSubmit={handleSubmit} style={{ textAlign: "center" }}>
+          <TextField
+            fullWidth
+            variant="outlined"
+            className={classes.inputField}
+            label="First Name"
+            name="firstname"
+            onChange={handleChange}
+            required
+          />
 
-      <div className={classes.root}>
-        <div className={classes.formContainer}>
-          <div className={classes.formTitle}>
-            <Typography style={{fontWeight: 'bold', fontFamily: 'Courier, sans-serif', fontSize: '20px', color: '#11153e'}}>
-              Add a Student
-            </Typography>
-          </div>
-          <form style={{textAlign: 'center'}} onSubmit={(e) => handleSubmit(e)}>
-            <label style= {{color:'#11153e', fontWeight: 'bold'}}>First Name: </label>
-            <input type="text" name="firstname" onChange ={(e) => handleChange(e)} />
-            <br/>
-            <br/>
+          <TextField
+            fullWidth
+            variant="outlined"
+            className={classes.inputField}
+            label="Last Name"
+            name="lastname"
+            onChange={handleChange}
+            required
+          />
 
-            <label style={{color:'#11153e', fontWeight: 'bold'}}>Last Name: </label>
-            <input type="text" name="lastname" onChange={(e) => handleChange(e)} />
-            <br/>
-            <br/>
-
-            <label style={{color:'#11153e', fontWeight: 'bold'}}>Campus Id: </label>
-            <input type="text" name="campusId" onChange={(e) => handleChange(e)} />
-            <br/>
-            <br/>
-
-            <Button variant="contained" color="primary" type="submit">
-              Submit
-            </Button>
-            <br/>
-            <br/>
-          </form>
-          </div>
+          <TextField
+            fullWidth
+            variant="outlined"
+            className={classes.inputField}
+            label="Email"
+            name="email"
+            onChange={handleChange}
+            required
+          />
+          <TextField
+            fullWidth
+            variant="outlined"
+            className={classes.inputField}
+            label="Image URL"
+            name="imageUrl"
+            onChange={handleChange}
+          />
+          <TextField
+            fullWidth
+            variant="outlined"
+            className={classes.inputField}
+            label="GPA"
+            name="gpa"
+            onChange={handleChange}
+          />
+          <TextField
+            fullWidth
+            variant="outlined"
+            className={classes.inputField}
+            label="Campus Id"
+            name="campusId"
+            onChange={handleChange}
+          />
+          <Button type="submit" color="primary" variant="contained">
+            Submit
+          </Button>
+        </form>
       </div>
-    </div>    
-  )
-}
+    </div>
+  );
+};
 
 export default NewStudentView;
