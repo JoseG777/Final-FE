@@ -15,16 +15,23 @@ import { CampusView } from "../views";
 class CampusContainer extends Component {
   // Get the specific campus data from back-end database
   componentDidMount() {
-    // Get campus ID from URL (API link)
-    this.props.fetchCampus(this.props.match.params.id);
+    const { id } = this.props.match.params;
+    this.props.fetchCampus(id);
   }
+
+  handleEditCampus = () => {
+    this.props.history.push(`/campus/${this.props.campus.id}/edit`);
+  };
 
   // Render a Campus view by passing campus data as props to the corresponding View component
   render() {
     return (
       <div>
         <Header />
-        <CampusView campus={this.props.campus} />
+        <CampusView 
+          campus={this.props.campus}
+          onEditCampus={this.handleEditCampus}
+        />
       </div>
     );
   }
