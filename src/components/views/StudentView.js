@@ -15,12 +15,16 @@ const StudentView = (props) => {
     <div>
       <h1>{student.firstname + " " + student.lastname}</h1>
 
-      {student.id == null ? 
-      (<Link to={`/campus/${student.campus.id}`}>
-        <h3>{student.campus.name}</h3>
-      </Link>)
-      : (<h3>Student not enrolled anywhere</h3>)}
-  
+       {student.campus ?
+        (
+          <Link to={`/campus/${student.campus.id}`}>
+            <h3>{student.campus.name}</h3>
+          </Link>
+        ) :
+        (
+          <h3>Student not enrolled anywhere</h3>
+        )
+      }
     </div>
   );
 
