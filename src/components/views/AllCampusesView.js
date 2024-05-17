@@ -62,6 +62,19 @@ const AllCampusesView = (props) => {
             <Typography variant="body2" component="p">
               {campus.description}
             </Typography>
+            <Typography variant="body2" component="p">
+            {campus.imageUrl ? (
+              <img
+                src={campus.imageUrl}
+                alt={campus.name}
+                style={{ width: "100px", height: "100px" }}
+              />
+            ) : (
+              <Typography variant="body2" component="p">
+                No image available
+              </Typography>
+            )}
+            </Typography>
             <Button
               variant="contained"
               color="secondary"
