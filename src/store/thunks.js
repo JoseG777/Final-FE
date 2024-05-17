@@ -56,6 +56,15 @@ export const addStudentToCampusThunk = (studentData, campusId) => async (dispatc
   }
 };
 
+export const removeStudentFromCampusThunk = (campusId, studentId) => async (dispatch) => {
+  try {
+    await axios.delete(`/api/campuses/${campusId}/students/${studentId}`);
+    dispatch({ type: 'REMOVE_STUDENT_FROM_CAMPUS', payload: { campusId, studentId } });
+  } catch (error) {
+    console.error('Failed to remove student from campus:', error);
+  }
+};
+
 // All Students
 // THUNK CREATOR:
 export const fetchAllStudentsThunk = () => async (dispatch) => {  // The THUNK

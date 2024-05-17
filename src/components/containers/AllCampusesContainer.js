@@ -10,7 +10,8 @@ import { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { fetchAllCampusesThunk, 
-         addStudentToCampusThunk, 
+         addStudentToCampusThunk,
+         removeStudentFromCampusThunk 
 } from "../../store/thunks";
 import { AllCampusesView } from "../views";
 
@@ -29,6 +30,10 @@ class AllCampusesContainer extends Component {
   handleAddStudent = (campusId) => {
     const newStudentData = { campusId, name: 'New Student',};
     this.props.addStudentToCampus(newStudentData);
+  };
+
+  handleRemoveStudent = (campusId, studentId) => {
+    this.props.removeStudentFromCampus(campusId, studentId);
   };
 
   // Render All Campuses view by passing all campuses data as props to the corresponding View component
@@ -58,6 +63,7 @@ const mapDispatch = (dispatch) => {
   return {
     fetchAllCampuses: () => dispatch(fetchAllCampusesThunk()),
     addStudentToCampus: (studentData) => dispatch(addStudentToCampusThunk(studentData)),
+    removeStudentFromCampus: (campusId, studentId) => dispatch(removeStudentFromCampusThunk(campusId, studentId)),
   };
 };
 
