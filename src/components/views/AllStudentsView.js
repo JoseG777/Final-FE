@@ -4,48 +4,105 @@ AllStudentsView.js
 The Views component is responsible for rendering web page with data provided by the corresponding Container component.
 It constructs a React component to display the all students view page.
 ================================================== */
-import { Link } from "react-router-dom";
+import React from "react";
+import { Link as RouterLink } from "react-router-dom";
+import {
+  Button,
+  Card,
+  CardContent,
+  Typography,
+  makeStyles,
+} from "@material-ui/core";
+
+const useStyles = makeStyles({
+  root: {
+    minWidth: 275,
+    marginBottom: 12,
+    backgroundColor: "#f5f5f5", // This is a light grey color, you can change it to match your desired background color
+    width: "40%",
+    margin: "auto",
+  },
+  title: {
+    fontSize: 14,
+  },
+  pos: {
+    marginBottom: 12,
+  },
+  link: {
+    color: "inherit",
+  },
+});
 
 const AllStudentsView = (props) => {
-  const {students, deleteStudent} = props;
-  // If there is no student, display a message
+  const { students, deleteStudent } = props;
+  const classes = useStyles();
+
   if (!students.length) {
     return (
-    <div>
-      <p>There are no students.</p>
-      <Link to={`newstudent`}>
-        <button>Add New Student</button>
-      </Link>
-    </div>
+      <div>
+        <Typography variant="h6">
+          There are no students in the system, please add students using the
+          button below
+        </Typography>
+        <RouterLink to={`newstudent`} className={classes.link}>
+          <Button variant="contained" color="primary">
+            Add New Student
+          </Button>
+        </RouterLink>
+      </div>
     );
   }
-  
-  // If there is at least one student, render All Students view 
+
   return (
     <div>
-      <h1>All Students</h1>
+      <Typography variant="h4">All Students</Typography>
 
       {students.map((student) => {
-          let name = student.firstname + " " + student.lastname;
-          return (
-            <div key={student.id}>
-              <Link to={`/student/${student.id}`}>
-                <h2>{name}</h2>
-              </Link>
-              <button onClick={() => deleteStudent(student.id)}>Delete</button>
-              <hr/>
-            </div>
-          );
+        let name = student.firstname + " " + student.lastname;
+        let imageUrl = student.imageUrl;
+        let gpa = student.gpa;
+        let campus = student.campus;
+        if (!campus) {
+          campus = { name: "Not Enrolled" };
         }
-      )}
-      <br/>
-      <Link to={`/newstudent`}>
-        <button>Add New Student</button>
-      </Link>
-      <br/><br/>
+        let email = student.email;
+
+        return (
+          <Card className={classes.root} key={student.id}>
+            <CardContent>
+              <RouterLink
+                to={`/student/${student.id}`}
+                className={classes.link}
+              >
+                <Typography variant="h5">{name}</Typography>
+              </RouterLink>
+              <Typography color="textSecondary">Email: {email}</Typography>
+              <img src={imageUrl} alt={name} style={{ width: "100px" }} />
+              <Typography color="textSecondary">GPA: {gpa}</Typography>
+              <Typography color="textSecondary">
+                Campus: {campus.name}
+              </Typography>
+              <Button
+                variant="contained"
+                color="secondary"
+                onClick={() => deleteStudent(student.id)}
+              >
+                Delete
+              </Button>
+            </CardContent>
+          </Card>
+        );
+      })}
+      <br />
+      <RouterLink to={`/newstudent`} className={classes.link}>
+        <Button variant="contained" color="primary">
+          Add New Student
+        </Button>
+      </RouterLink>
+      <br />
+      <br />
     </div>
   );
 };
-
 
 export default AllStudentsView;
