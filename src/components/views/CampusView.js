@@ -20,16 +20,25 @@ const CampusView = ({campus, onEditCampus, onAddStudent, onRemoveStudent }) => {
           ) : (
             <p>No image available</p>
           )}
+      <h2> Students: </h2>
       {campus.students && campus.students.map(student => (
         <div key={student.id}>
+          <hr/>
           <Link to={`/student/${student.id}`}>
             <h2>{student.firstname} {student.lastname}</h2>
           </Link>
           <button onClick={() => onRemoveStudent(campus.id, student.id)}>Remove from Campus</button>
+          <hr/>
         </div>
       ))}
-      <button onClick={() => onAddStudent(campus.id)}>Add New Student to Campus</button>
-      <button onClick={() => onEditCampus()}>Edit Campus</button>
+      <button onClick={() => onAddStudent(campus.id)}> Create and Add Student </button> 
+      <br/>
+      <button onClick={() => onEditCampus()}> Edit Campus </button>
+
+      <br/>
+      <Link to ="/students"> 
+        Add existing student?
+      </Link>
     </div>
   );
 };
