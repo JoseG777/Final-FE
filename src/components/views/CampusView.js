@@ -7,7 +7,7 @@ It constructs a React component to display a single campus and its students (if 
 import { Link } from "react-router-dom";
 
 // Take in props data to construct the component
-const CampusView = ({campus, onEditCampus}) => {
+const CampusView = ({campus, onEditCampus, onAddStudent}) => {
   
   // Render a single Campus view with list of its students
   return (
@@ -27,6 +27,7 @@ const CampusView = ({campus, onEditCampus}) => {
           </Link>
         </div>
       ))}
+      <button onClick={() => onAddStudent(campus.id)}>Add New Student to Campus</button>
       <button onClick={() => onEditCampus()}>Edit Campus</button>
     </div>
   );
