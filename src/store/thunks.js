@@ -82,8 +82,10 @@ export const addStudentToCampusThunk =
         studentData
       );
       dispatch(ac.addStudentToCampus(response.data, campusId));
+      return response.data; // return the newly created student data
     } catch (error) {
       console.error("Failed to add student to campus:", error);
+      throw error; // throw the error to be caught in the calling function
     }
   };
 
