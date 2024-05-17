@@ -13,6 +13,9 @@ const AllCampusesView = (props) => {
     return <div>There are no campuses.</div>;
   }
 
+  //sort them by id
+  props.allCampuses.sort((a, b) => a.id - b.id);
+
   // If there is at least one campus, render All Campuses view 
   return (
     <div>
@@ -30,7 +33,7 @@ const AllCampusesView = (props) => {
         </div>
       ))}
       <br/>
-      <Link to={`/`}>
+      <Link to={`/newcampus`}>
         <button>Add New Campus</button>
       </Link>
       <br/><br/>
