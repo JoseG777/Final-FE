@@ -43,6 +43,16 @@ export const editCampus = (campus) => {
   };
 };
 
+export const addStudentToCampus = (student, campusId) => ({
+  type: at.ADD_STUDENT_TO_CAMPUS,
+  payload: { student, campusId }
+});
+
+export const removeStudentFromCampus = (campusId, studentId) => ({
+  type: at.REMOVE_STUDENT_FROM_CAMPUS,
+  payload: { campusId, studentId }
+});
+
 //All Students
 export const fetchAllStudents = (students) => {
   return {
