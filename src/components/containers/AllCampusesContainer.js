@@ -9,7 +9,9 @@ import Header from './Header';
 import { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { fetchAllCampusesThunk } from "../../store/thunks";
+import { fetchAllCampusesThunk, 
+         addStudentToCampusThunk, 
+} from "../../store/thunks";
 import { AllCampusesView } from "../views";
 
 class AllCampusesContainer extends Component {
@@ -17,16 +19,26 @@ class AllCampusesContainer extends Component {
   componentDidMount() {
     console.log(this.props);
     this.props.fetchAllCampuses();
+
+    const { id } = this.props.match.params;
+    if (id) {
+      this.props.fetchCampus(id);
+    }
   }
+
+  handleAddStudent = (campusId) => {
+    const newStudentData = { campusId, name: 'New Student',};
+    this.props.addStudentToCampus(newStudentData);
+  };
 
   // Render All Campuses view by passing all campuses data as props to the corresponding View component
   render() {
+    const { allCampuses } = this.props;
+
     return (
       <div>
         <Header />
-        <AllCampusesView
-          allCampuses={this.props.allCampuses}
-        />
+        {!this.props.match.params.id && <AllCampusesView allCampuses={allCampuses} />}
       </div>
     );
   }
@@ -45,6 +57,7 @@ const mapState = (state) => {
 const mapDispatch = (dispatch) => {
   return {
     fetchAllCampuses: () => dispatch(fetchAllCampusesThunk()),
+    addStudentToCampus: (studentData) => dispatch(addStudentToCampusThunk(studentData)),
   };
 };
 

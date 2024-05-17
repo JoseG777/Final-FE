@@ -45,6 +45,17 @@ export const updateCampusThunk = (campusData) => async (dispatch) => {
   }
 };
 
+// Add a single student to a campus and remove a single student from a campus
+export const addStudentToCampusThunk = (studentData, campusId) => async (dispatch) => {
+  console.log('Received campusId:', campusId); 
+  try {
+    const response = await axios.post(`/api/campuses/${campusId}/students`, studentData);
+    dispatch({ type: 'ADD_STUDENT_TO_CAMPUS', payload: response.data });
+  } catch (error) {
+    console.error('Failed to add student to campus:', error);
+  }
+};
+
 // All Students
 // THUNK CREATOR:
 export const fetchAllStudentsThunk = () => async (dispatch) => {  // The THUNK
