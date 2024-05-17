@@ -11,7 +11,8 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { fetchAllCampusesThunk, 
          addStudentToCampusThunk,
-         removeStudentFromCampusThunk 
+         removeStudentFromCampusThunk,
+         deleteCampusThunk
 } from "../../store/thunks";
 import { AllCampusesView } from "../views";
 
@@ -26,6 +27,10 @@ class AllCampusesContainer extends Component {
       this.props.fetchCampus(id);
     }
   }
+
+  handleDeleteCampus = (campusId) => {
+    this.props.deleteCampus(campusId);
+  };
 
   handleAddStudent = (campusId) => {
     const newStudentData = { campusId, name: 'New Student',};
@@ -43,7 +48,7 @@ class AllCampusesContainer extends Component {
     return (
       <div>
         <Header />
-        {!this.props.match.params.id && <AllCampusesView allCampuses={allCampuses} />}
+        {!this.props.match.params.id && <AllCampusesView allCampuses={allCampuses} onDeleteCampus={this.handleDeleteCampus}  />}
       </div>
     );
   }
@@ -62,6 +67,7 @@ const mapState = (state) => {
 const mapDispatch = (dispatch) => {
   return {
     fetchAllCampuses: () => dispatch(fetchAllCampusesThunk()),
+    deleteCampus: (campusId) => dispatch(deleteCampusThunk(campusId)),
     addStudentToCampus: (studentData) => dispatch(addStudentToCampusThunk(studentData)),
     removeStudentFromCampus: (campusId, studentId) => dispatch(removeStudentFromCampusThunk(campusId, studentId)),
   };

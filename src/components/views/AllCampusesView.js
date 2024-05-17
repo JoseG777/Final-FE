@@ -29,6 +29,7 @@ const AllCampusesView = (props) => {
           <h4>campus id: {campus.id}</h4>
           <p>{campus.address}</p>
           <p>{campus.description}</p>
+          <button onClick={() => props.onDeleteCampus(campus.id)}>Delete Campus</button>
           <hr/>
         </div>
       ))}
