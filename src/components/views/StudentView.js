@@ -16,9 +16,12 @@ import {
 
 const useStyles = makeStyles({
   root: {
-    minWidth: 275,
-    marginBottom: 12,
-    backgroundColor: "#f5f5f5", // This is a light grey color, you can change it to match your desired background color
+    minWidth: 300,
+    margin: "auto",
+    marginBottom: 100,
+    width: "100%",
+    color: "white",
+    backgroundColor: "#6b84e5",
   },
   title: {
     fontSize: 14,
@@ -27,8 +30,21 @@ const useStyles = makeStyles({
     marginBottom: 12,
   },
   link: {
-    textDecoration: "none",
+    marginBottom: 12,
+    padding: 5,
     color: "inherit",
+    transition: "transform 0.3s", // Smooth transition
+    "&:hover": {
+      transform: "scale(1.1)", // Makes the title 10% bigger upon hover
+    },
+  },
+  button: {
+    marginBottom: 12,
+    fontSize: 13,
+    transition: "transform 0.3s", // Smooth transition
+    "&:hover": {
+      transform: "scale(1.1)", // Makes the button 10% bigger upon hover
+    },
   },
 });
 
@@ -47,7 +63,7 @@ const StudentView = ({ student, onEditStudent }) => {
   return (
     <Card className={classes.root}>
       <CardContent>
-        <Typography variant="h5" component="h2">
+        <Typography variant="h3" component="h2">
           {student.firstname + " " + student.lastname}
         </Typography>
         <Typography className={classes.pos} color="textSecondary">
@@ -58,7 +74,7 @@ const StudentView = ({ student, onEditStudent }) => {
           alt={student.firstname + " " + student.lastname}
           style={{ width: "300px" }}
         />
-        <Typography className={classes.pos} color="textSecondary">
+        <Typography className={classes.pos} variant="h5">
           GPA: {student.gpa}
         </Typography>
 
@@ -67,12 +83,12 @@ const StudentView = ({ student, onEditStudent }) => {
             to={`/campus/${student.campus.id}`}
             className={classes.link}
           >
-            <Typography variant="h6" component="h2">
+            <Typography variant="h4" component="h2" className={classes.link}>
               {student.campus.name}
             </Typography>
           </RouterLink>
         ) : (
-          <Typography variant="h6" component="h2">
+          <Typography variant="h4" component="h2">
             Student is not enrolled in any college campus
           </Typography>
         )}
@@ -80,6 +96,7 @@ const StudentView = ({ student, onEditStudent }) => {
         <Button
           variant="contained"
           color="primary"
+          className={classes.button}
           onClick={() => onEditStudent()}
         >
           Edit Student

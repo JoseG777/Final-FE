@@ -14,15 +14,16 @@ import {
   makeStyles,
 } from "@material-ui/core";
 import { useState, useEffect } from "react";
-import { useLocation  } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 const useStyles = makeStyles({
   root: {
-    minWidth: 275,
+    minWidth: 300,
+    color: "white",
     marginBottom: 12,
-    backgroundColor: "#f5f5f5",
-    width: "40%",
     margin: "auto",
+    width: "40%",
+    backgroundColor: "#6b84e5",
   },
   title: {
     fontSize: 14,
@@ -32,43 +33,57 @@ const useStyles = makeStyles({
   },
   link: {
     color: "inherit",
+    transition: "transform 0.3s", // Smooth transition
+    "&:hover": {
+      transform: "scale(1.1)", // Makes the title 10% bigger upon hover
+    },
+  },
+  button: {
+    transition: "transform 0.3s", // Smooth transition
+    "&:hover": {
+      transform: "scale(1.1)", // Makes the button 10% bigger upon hover
+    },
   },
 });
 
 const AllStudentsView = (props) => {
-  const { students, deleteStudent, addStudentToCampus, fetchAllStudents} = props;
+  const { students, deleteStudent, addStudentToCampus, fetchAllStudents } =
+    props;
   const classes = useStyles();
   const location = useLocation();
   const [campusId, setCampusId] = useState(null);
 
   useEffect(() => {
-    console.log("location.state.campusId:", location.state?.campusId);  
+    console.log("location.state.campusId:", location.state?.campusId);
     if (location.state && location.state.campusId) {
       setCampusId(location.state.campusId);
     }
   }, [location]);
 
-  console.log("campusId", campusId)
+  console.log("campusId", campusId);
 
   const handleAddStudentToCampus = async (studentData, campusId) => {
-      try {
-          await addStudentToCampus(studentData, campusId);
-          fetchAllStudents();  // Refresh the student list after successful addition
-      } catch (error) {
-          console.error("Failed to add student to campus:", error);
-      }
+    try {
+      await addStudentToCampus(studentData, campusId);
+      fetchAllStudents(); // Refresh the student list after successful addition
+    } catch (error) {
+      console.error("Failed to add student to campus:", error);
+    }
   };
-
 
   if (!students.length) {
     return (
       <div>
-        <Typography variant="h6">
+        <Typography variant="h5">
           There are no students in the system, please add students using the
           button below
         </Typography>
         <RouterLink to={`newstudent`} className={classes.link}>
-          <Button variant="contained" color="primary">
+          <Button
+            variant="contained"
+            color="primary"
+            className={classes.button}
+          >
             Add New Student
           </Button>
         </RouterLink>
@@ -99,41 +114,42 @@ const AllStudentsView = (props) => {
                 to={`/student/${student.id}`}
                 className={classes.link}
               >
-                <Typography variant="h5">{name}</Typography>
+                <Typography variant="h4" className={classes.link}>
+                  {name}
+                </Typography>
               </RouterLink>
               <Typography color="textSecondary">Email: {email}</Typography>
-              <img src={imageUrl} alt={name} style={{ width: "100px" }} />
-              <Typography color="textSecondary">GPA: {gpa}</Typography>
-              <Typography color="textSecondary">
-                Campus: {campus.name}
-              </Typography>
-              {(campusId && !enrolled) ? (
-          
-              <Button
-              variant="contained"
-                color="primary"
-              onClick={() => handleAddStudentToCampus({ email: student.email }, campusId)}
+              <img src={imageUrl} alt={name} style={{ width: "150px" }} />
+              <Typography variant="h6">GPA: {gpa}</Typography>
+              <Typography variant="h6">Campus: {campus.name}</Typography>
+              {campusId && !enrolled ? (
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={() =>
+                    handleAddStudentToCampus({ email: student.email }, campusId)
+                  }
                 >
                   Add to Campus
-              </Button>
-            ) : (
-              <Typography color="textSecondary"> Already Enrolled </Typography>
-            )}
+                </Button>
+              ) : (
+                <Typography color="textSecondary"> </Typography>
+              )}
               <Button
                 variant="contained"
                 color="secondary"
+                className={classes.button}
                 onClick={() => deleteStudent(student.id)}
               >
                 Delete
               </Button>
-
             </CardContent>
           </Card>
         );
       })}
       <br />
       <RouterLink to={`/newstudent`} className={classes.link}>
-        <Button variant="contained" color="primary">
+        <Button variant="contained" color="primary" className={classes.button}>
           Add New Student
         </Button>
       </RouterLink>

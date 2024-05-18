@@ -20,6 +20,8 @@ const useStyles = makeStyles({
     marginBottom: 12,
     margin: "auto",
     width: "40%",
+    color: "white",
+    backgroundColor: "#6b84e5",
   },
   title: {
     fontSize: 14,
@@ -29,6 +31,16 @@ const useStyles = makeStyles({
   },
   link: {
     color: "inherit",
+    transition: "transform 0.3s", // Smooth transition
+    "&:hover": {
+      transform: "scale(1.1)", // Makes the title 10% bigger upon hover
+    },
+  },
+  button: {
+    transition: "transform 0.3s", // Smooth transition
+    "&:hover": {
+      transform: "scale(1.1)", // Makes the button 10% bigger upon hover
+    },
   },
 });
 
@@ -51,33 +63,36 @@ const AllCampusesView = (props) => {
         <Card className={classes.root} key={campus.id}>
           <CardContent>
             <Link to={`/campus/${campus.id}`} className={classes.link}>
-              <Typography variant="h5">{campus.name}</Typography>
+              <Typography variant="h4" className={classes.link}>
+                {campus.name}
+              </Typography>
             </Link>
             <Typography className={classes.pos} color="textSecondary">
               campus id: {campus.id}
             </Typography>
-            <Typography variant="body2" component="p">
+            <Typography variant="h7" component="p">
               {campus.address}
             </Typography>
-            <Typography variant="body2" component="p">
+            <Typography variant="h6" component="p">
               {campus.description}
             </Typography>
             <Typography variant="body2" component="p">
-            {campus.imageUrl ? (
-              <img
-                src={campus.imageUrl}
-                alt={campus.name}
-                style={{ width: "100px", height: "100px" }}
-              />
-            ) : (
-              <Typography variant="body2" component="p">
-                No image available
-              </Typography>
-            )}
+              {campus.imageUrl ? (
+                <img
+                  src={campus.imageUrl}
+                  alt={campus.name}
+                  style={{ width: "100px", height: "100px" }}
+                />
+              ) : (
+                <Typography variant="body2" component="p">
+                  No image available
+                </Typography>
+              )}
             </Typography>
             <Button
               variant="contained"
               color="secondary"
+              className={classes.button}
               onClick={() => props.onDeleteCampus(campus.id)}
             >
               Delete Campus
@@ -89,6 +104,7 @@ const AllCampusesView = (props) => {
       <Button
         variant="contained"
         color="primary"
+        className={classes.button}
         component={Link}
         to={`/newcampus`}
       >
