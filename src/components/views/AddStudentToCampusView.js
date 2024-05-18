@@ -115,6 +115,7 @@ const AddStudentToCampusView = ({ campusId, onSubmit }) => {
             name="gpa"
             value={formData.gpa}
             onChange={handleChange}
+            required
           />
           <Button type="submit" color="primary" variant="contained">
             Add Student
