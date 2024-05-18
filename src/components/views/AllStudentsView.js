@@ -13,7 +13,6 @@ import {
   Typography,
   makeStyles,
 } from "@material-ui/core";
-import axios from "axios";
 import { useState, useEffect } from "react";
 import { useLocation  } from "react-router-dom";
 
@@ -21,7 +20,7 @@ const useStyles = makeStyles({
   root: {
     minWidth: 275,
     marginBottom: 12,
-    backgroundColor: "#f5f5f5", // This is a light grey color, you can change it to match your desired background color
+    backgroundColor: "#f5f5f5",
     width: "40%",
     margin: "auto",
   },
@@ -37,25 +36,20 @@ const useStyles = makeStyles({
 });
 
 const AllStudentsView = (props) => {
-  const { students, deleteStudent} = props;
+  const { students, deleteStudent, addStudentToCampus} = props;
   const classes = useStyles();
   const location = useLocation();
   const [campusId, setCampusId] = useState(null);
 
   useEffect(() => {
+    console.log("location.state.campusId:", location.state?.campusId);  
     if (location.state && location.state.campusId) {
       setCampusId(location.state.campusId);
     }
   }, [location]);
 
-  const addStudentToCampus = async (email) => {
-    try {
-      const response = await axios.put(`/api/campuses/${campusId}/students`, { email });
-      alert(response.data.message); 
-    } catch (error) {
-      alert(error.response.data.message); 
-    }
-  };
+  console.log("campusId", campusId)
+
 
   if (!students.length) {
     return (
@@ -104,14 +98,16 @@ const AllStudentsView = (props) => {
               <Typography color="textSecondary">
                 Campus: {campus.name}
               </Typography>
-              {campusId && !enrolled && (
+              {(campusId && !enrolled) ? (
               <Button
                 variant="contained"
                 color="primary"
-                onClick={() => addStudentToCampus(student.email)}
+                onClick={() => addStudentToCampus({email: student.email}, campusId)}
               >
                 Add to Campus
               </Button>
+            ) : (
+              <Typography color="textSecondary"> Already Enrolled </Typography>
             )}
               <Button
                 variant="contained"
