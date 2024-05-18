@@ -116,7 +116,10 @@ const CampusView = ({
           Edit Campus
         </Button>
         <br />
-        <RouterLink to="/students" className={classes.link}>
+        <RouterLink to={{
+          pathname: "/students",
+          state: { campusId: campus.id }
+        }} className={classes.link}>
           <Button variant="contained" color="primary">
             Add existing student?
           </Button>

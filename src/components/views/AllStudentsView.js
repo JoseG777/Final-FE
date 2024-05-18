@@ -13,6 +13,9 @@ import {
   Typography,
   makeStyles,
 } from "@material-ui/core";
+import axios from "axios";
+import { useState, useEffect } from "react";
+import { useLocation  } from "react-router-dom";
 
 const useStyles = makeStyles({
   root: {
@@ -34,8 +37,25 @@ const useStyles = makeStyles({
 });
 
 const AllStudentsView = (props) => {
-  const { students, deleteStudent } = props;
+  const { students, deleteStudent} = props;
   const classes = useStyles();
+  const location = useLocation();
+  const [campusId, setCampusId] = useState(null);
+
+  useEffect(() => {
+    if (location.state && location.state.campusId) {
+      setCampusId(location.state.campusId);
+    }
+  }, [location]);
+
+  const addStudentToCampus = async (email) => {
+    try {
+      const response = await axios.put(`/api/campuses/${campusId}/students`, { email });
+      alert(response.data.message); 
+    } catch (error) {
+      alert(error.response.data.message); 
+    }
+  };
 
   if (!students.length) {
     return (
@@ -62,8 +82,10 @@ const AllStudentsView = (props) => {
         let imageUrl = student.imageUrl;
         let gpa = student.gpa;
         let campus = student.campus;
+        let enrolled = true;
         if (!campus) {
           campus = { name: "Not Enrolled" };
+          enrolled = false;
         }
         let email = student.email;
 
@@ -82,6 +104,15 @@ const AllStudentsView = (props) => {
               <Typography color="textSecondary">
                 Campus: {campus.name}
               </Typography>
+              {campusId && !enrolled && (
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={() => addStudentToCampus(student.email)}
+              >
+                Add to Campus
+              </Button>
+            )}
               <Button
                 variant="contained"
                 color="secondary"
@@ -89,6 +120,7 @@ const AllStudentsView = (props) => {
               >
                 Delete
               </Button>
+
             </CardContent>
           </Card>
         );
