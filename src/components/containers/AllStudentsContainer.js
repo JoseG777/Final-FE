@@ -13,7 +13,7 @@ import { withRouter } from "react-router-dom";
 import { 
   fetchAllStudentsThunk,
   deleteStudentThunk,
-  addStudentToCampusThunk
+  addStudentToCampusThunk,
 } from '../../store/thunks';
 
 import AllStudentsView from '../views/AllStudentsView';
@@ -33,6 +33,7 @@ class AllStudentsContainer extends Component {
           students={this.props.allStudents}
           deleteStudent={this.props.deleteStudent}   
           addStudentToCampus={this.props.addStudentToCampus} 
+          fetchAllStudents={this.props.fetchAllStudents} 
         />
       </div>
     )

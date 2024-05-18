@@ -36,7 +36,7 @@ const useStyles = makeStyles({
 });
 
 const AllStudentsView = (props) => {
-  const { students, deleteStudent, addStudentToCampus} = props;
+  const { students, deleteStudent, addStudentToCampus, fetchAllStudents} = props;
   const classes = useStyles();
   const location = useLocation();
   const [campusId, setCampusId] = useState(null);
@@ -49,6 +49,15 @@ const AllStudentsView = (props) => {
   }, [location]);
 
   console.log("campusId", campusId)
+
+  const handleAddStudentToCampus = async (studentData, campusId) => {
+      try {
+          await addStudentToCampus(studentData, campusId);
+          fetchAllStudents();  // Refresh the student list after successful addition
+      } catch (error) {
+          console.error("Failed to add student to campus:", error);
+      }
+  };
 
 
   if (!students.length) {
@@ -99,12 +108,13 @@ const AllStudentsView = (props) => {
                 Campus: {campus.name}
               </Typography>
               {(campusId && !enrolled) ? (
+          
               <Button
-                variant="contained"
+              variant="contained"
                 color="primary"
-                onClick={() => addStudentToCampus({email: student.email}, campusId)}
-              >
-                Add to Campus
+              onClick={() => handleAddStudentToCampus({ email: student.email }, campusId)}
+                >
+                  Add to Campus
               </Button>
             ) : (
               <Typography color="textSecondary"> Already Enrolled </Typography>

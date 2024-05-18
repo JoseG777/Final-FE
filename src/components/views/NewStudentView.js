@@ -77,6 +77,7 @@ const NewStudentView = ({ handleChange, handleSubmit }) => {
           label="GPA"
           name="gpa"
           onChange={handleChange}
+          required
         />
         <TextField
           fullWidth
